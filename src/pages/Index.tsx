@@ -7,6 +7,8 @@ import BrevetsCalendar from '@/components/BrevetsCalendar';
 import BrevetsFilters from '@/components/BrevetsFilters';
 import BrevetsCard from '@/components/BrevetsCard';
 import EventDetailsModal from '@/components/EventDetailsModal';
+import { Button } from '@/components/ui/button';
+import { ChevronDown, ChevronUp } from 'lucide-react';
 
 const Index = () => {
   // State for filters
@@ -18,6 +20,7 @@ const Index = () => {
   // State for calendar
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [showCalendar, setShowCalendar] = useState(false);
   
   // State for filtered brevets
   const [filteredBrevets, setFilteredBrevets] = useState<Brevet[]>(brevets);
@@ -90,6 +93,11 @@ const Index = () => {
     setIsModalOpen(false);
   };
 
+  // Toggle calendar visibility
+  const toggleCalendar = () => {
+    setShowCalendar(!showCalendar);
+  };
+
   return (
     <div className="container mx-auto p-4 max-w-7xl">
       <header className="mb-6 text-center">
@@ -109,9 +117,65 @@ const Index = () => {
         resetFilters={resetFilters}
       />
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2">
-          <div className="bg-white rounded-lg shadow-lg p-4 mb-6">
+      {/* Main content container */}
+      <div className="space-y-6">
+        {/* Events list - now the main focus */}
+        <div className="bg-white rounded-lg shadow-lg p-6">
+          <h2 className="text-2xl font-bold mb-4 text-cycling-blue">
+            {selectedDate 
+              ? `Events on ${format(selectedDate, 'MMMM d, yyyy')}` 
+              : 'Upcoming Brevets'}
+          </h2>
+          <p className="text-muted-foreground text-sm mb-4">
+            {filteredBrevets.length} events found
+          </p>
+          
+          {filteredBrevets.length === 0 ? (
+            <div className="text-center py-8 text-muted-foreground">
+              No events found matching your criteria.
+              <br />
+              <button 
+                onClick={resetFilters}
+                className="text-cycling-blue underline mt-2"
+              >
+                Reset filters
+              </button>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredBrevets.map(brevet => (
+                <BrevetsCard 
+                  key={brevet.id} 
+                  brevet={brevet}
+                  onSelect={handleBrevetsSelect}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+        
+        {/* Calendar toggle button */}
+        <div className="flex justify-center">
+          <Button 
+            onClick={toggleCalendar} 
+            variant="outline" 
+            className="flex items-center gap-2"
+          >
+            {showCalendar ? (
+              <>
+                Hide Calendar <ChevronUp className="h-4 w-4" />
+              </>
+            ) : (
+              <>
+                Show Calendar <ChevronDown className="h-4 w-4" />
+              </>
+            )}
+          </Button>
+        </div>
+        
+        {/* Collapsible calendar section */}
+        {showCalendar && (
+          <div className="bg-white rounded-lg shadow-lg p-4">
             <CalendarHeader 
               currentMonth={currentMonth} 
               setCurrentMonth={setCurrentMonth} 
@@ -123,42 +187,7 @@ const Index = () => {
               setSelectedDate={setSelectedDate}
             />
           </div>
-        </div>
-
-        <div className="space-y-4">
-          <div className="bg-white rounded-lg shadow-lg p-4">
-            <h2 className="text-xl font-bold mb-2 text-cycling-blue">
-              {selectedDate 
-                ? `Events on ${format(selectedDate, 'MMMM d, yyyy')}` 
-                : 'Upcoming Brevets'}
-            </h2>
-            <p className="text-muted-foreground text-sm mb-4">
-              {filteredBrevets.length} events found
-            </p>
-            {filteredBrevets.length === 0 ? (
-              <div className="text-center py-8 text-muted-foreground">
-                No events found matching your criteria.
-                <br />
-                <button 
-                  onClick={resetFilters}
-                  className="text-cycling-blue underline mt-2"
-                >
-                  Reset filters
-                </button>
-              </div>
-            ) : (
-              <div className="space-y-4 max-h-[calc(100vh-380px)] overflow-y-auto pr-1">
-                {filteredBrevets.map(brevet => (
-                  <BrevetsCard 
-                    key={brevet.id} 
-                    brevet={brevet}
-                    onSelect={handleBrevetsSelect}
-                  />
-                ))}
-              </div>
-            )}
-          </div>
-        </div>
+        )}
       </div>
 
       <EventDetailsModal 

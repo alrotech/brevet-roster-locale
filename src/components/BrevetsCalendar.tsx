@@ -22,7 +22,7 @@ const BrevetsCalendar: React.FC<BrevetsCalendarProps> = ({
   const monthDays = eachDayOfInterval({ start: monthStart, end: monthEnd });
 
   // Days of the week
-  const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const weekdays = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
 
   // Check if a specific day has events
   const hasEventsOnDay = (day: Date) => {
@@ -32,11 +32,11 @@ const BrevetsCalendar: React.FC<BrevetsCalendarProps> = ({
   };
 
   return (
-    <div className="bg-white rounded-lg shadow overflow-hidden">
+    <div className="bg-white rounded-lg overflow-hidden">
       {/* Calendar header with days of the week */}
       <div className="grid grid-cols-7 bg-cycling-blue text-white font-semibold">
         {weekdays.map((day, index) => (
-          <div key={index} className="p-2 text-center">
+          <div key={index} className="p-1 text-center text-xs">
             {day}
           </div>
         ))}
@@ -53,7 +53,7 @@ const BrevetsCalendar: React.FC<BrevetsCalendarProps> = ({
             <div
               key={i}
               className={cn(
-                "h-16 p-1 border border-muted flex flex-col items-center justify-start",
+                "h-12 p-1 border border-muted flex flex-col items-center justify-start",
                 isToday && "bg-muted",
                 !isSameMonth(day, currentMonth) && "text-muted-foreground opacity-50",
                 isSelected && "calendar-day-selected"
@@ -61,7 +61,7 @@ const BrevetsCalendar: React.FC<BrevetsCalendarProps> = ({
               onClick={() => setSelectedDate(day)}
             >
               <span className={cn(
-                "inline-flex items-center justify-center w-7 h-7 rounded-full text-sm",
+                "inline-flex items-center justify-center w-6 h-6 rounded-full text-xs",
                 isToday && "bg-cycling-blue text-white",
                 isSelected && !isToday && "bg-cycling-green text-white",
                 hasEvents && !isSelected && !isToday && "calendar-day-has-events",
@@ -71,26 +71,7 @@ const BrevetsCalendar: React.FC<BrevetsCalendarProps> = ({
               </span>
               
               {hasEvents && (
-                <div className="w-full mt-1">
-                  {brevets
-                    .filter(brevet => isSameDay(parseISO(brevet.date), day))
-                    .slice(0, 1)
-                    .map(brevet => (
-                      <div 
-                        key={brevet.id}
-                        className="text-xs truncate text-center bg-cycling-light-blue rounded px-1 py-0.5"
-                      >
-                        {brevet.distance}k
-                      </div>
-                    ))}
-                  
-                  {/* Show count if more than 1 event */}
-                  {brevets.filter(brevet => isSameDay(parseISO(brevet.date), day)).length > 1 && (
-                    <div className="text-xs text-center mt-0.5 text-muted-foreground">
-                      +{brevets.filter(brevet => isSameDay(parseISO(brevet.date), day)).length - 1} more
-                    </div>
-                  )}
-                </div>
+                <div className="w-2 h-2 bg-cycling-light-blue rounded-full mt-1"></div>
               )}
             </div>
           );
