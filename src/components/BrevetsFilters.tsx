@@ -46,7 +46,7 @@ const BrevetsFilters: React.FC<FiltersProps> = ({
               <SelectValue placeholder="All cities" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">All cities</SelectItem>
+              <SelectItem value="all_cities">All cities</SelectItem>
               {uniqueCities.map((city) => (
                 <SelectItem key={city} value={city}>{city}</SelectItem>
               ))}
@@ -115,14 +115,14 @@ const BrevetsFilters: React.FC<FiltersProps> = ({
         <div className="space-y-2">
           <Label htmlFor="distance-filter">Distance</Label>
           <Select 
-            value={selectedDistance ? selectedDistance.toString() : ""}
-            onValueChange={(value) => setSelectedDistance(value ? parseInt(value) : null)}
+            value={selectedDistance ? selectedDistance.toString() : "all_distances"}
+            onValueChange={(value) => setSelectedDistance(value === "all_distances" ? null : parseInt(value))}
           >
             <SelectTrigger id="distance-filter">
               <SelectValue placeholder="All distances" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">All distances</SelectItem>
+              <SelectItem value="all_distances">All distances</SelectItem>
               {distanceOptions.map((distance) => (
                 <SelectItem key={distance} value={distance.toString()}>{distance}k</SelectItem>
               ))}

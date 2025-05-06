@@ -10,7 +10,7 @@ import EventDetailsModal from '@/components/EventDetailsModal';
 
 const Index = () => {
   // State for filters
-  const [selectedCity, setSelectedCity] = useState('');
+  const [selectedCity, setSelectedCity] = useState('all_cities');
   const [startDate, setStartDate] = useState<Date | undefined>(undefined);
   const [endDate, setEndDate] = useState<Date | undefined>(undefined);
   const [selectedDistance, setSelectedDistance] = useState<number | null>(null);
@@ -31,7 +31,7 @@ const Index = () => {
     let filtered = [...brevets];
     
     // Filter by city
-    if (selectedCity) {
+    if (selectedCity && selectedCity !== 'all_cities') {
       filtered = filtered.filter(brevet => brevet.city === selectedCity);
     }
     
@@ -72,7 +72,7 @@ const Index = () => {
 
   // Reset all filters
   const resetFilters = () => {
-    setSelectedCity('');
+    setSelectedCity('all_cities');
     setStartDate(undefined);
     setEndDate(undefined);
     setSelectedDistance(null);
