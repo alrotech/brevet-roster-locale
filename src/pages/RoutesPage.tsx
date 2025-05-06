@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 
-const Routes = () => {
+const RoutesPage = () => {
   const navigate = useNavigate();
   
   return (
@@ -39,4 +39,4 @@ const Routes = () => {
   );
 };
 
-export default Routes;
+export default RoutesPage;

@@ -10,7 +10,7 @@ import NavBar from "./components/NavBar";
 import Brevets from "./pages/Brevets";
 import Permanents from "./pages/Permanents";
 import Clubs from "./pages/Clubs";
-import Routes from "./pages/Routes";
+import RoutesPage from "./pages/RoutesPage";
 import Rankings from "./pages/Rankings";
 import Profile from "./pages/Profile";
 
@@ -28,7 +28,7 @@ const App = () => (
           <Route path="/brevets" element={<Brevets />} />
           <Route path="/permanents" element={<Permanents />} />
           <Route path="/clubs" element={<Clubs />} />
-          <Route path="/routes" element={<Routes />} />
+          <Route path="/routes" element={<RoutesPage />} />
           <Route path="/rankings" element={<Rankings />} />
           <Route path="/profile" element={<Profile />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
