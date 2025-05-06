@@ -5,6 +5,7 @@ import { format } from 'date-fns';
 import { Brevet } from '@/data/brevets';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { AspectRatio } from '@/components/ui/aspect-ratio';
 
 interface BrevetsCardProps {
   brevet: Brevet;
@@ -25,15 +26,31 @@ const BrevetsCard: React.FC<BrevetsCardProps> = ({ brevet, onSelect }) => {
 
   return (
     <Card className="h-full flex flex-col hover:shadow-lg transition-shadow">
-      <CardHeader className="pb-2">
+      {brevet.imageUrl && (
+        <div className="relative">
+          <AspectRatio ratio={16 / 9} className="bg-muted">
+            <img
+              src={brevet.imageUrl}
+              alt={brevet.title}
+              className="object-cover w-full h-full rounded-t-lg"
+            />
+          </AspectRatio>
+          <div className={`absolute top-2 right-2 ${getDistanceColor(brevet.distance)} text-white text-sm font-bold py-1 px-3 rounded-full shadow-md`}>
+            {brevet.distance}k
+          </div>
+        </div>
+      )}
+      <CardHeader className={brevet.imageUrl ? "pb-2 pt-3" : "pb-2"}>
         <div className="flex justify-between items-start">
           <div>
             <CardTitle className="text-lg font-bold">{brevet.title}</CardTitle>
             <CardDescription className="font-medium">{brevet.organizer}</CardDescription>
           </div>
-          <div className={`${getDistanceColor(brevet.distance)} text-white text-sm font-bold py-1 px-3 rounded-full`}>
-            {brevet.distance}k
-          </div>
+          {!brevet.imageUrl && (
+            <div className={`${getDistanceColor(brevet.distance)} text-white text-sm font-bold py-1 px-3 rounded-full`}>
+              {brevet.distance}k
+            </div>
+          )}
         </div>
       </CardHeader>
       <CardContent className="flex-grow pb-4">

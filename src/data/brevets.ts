@@ -1,4 +1,3 @@
-
 export type BrevetsDistance = 200 | 300 | 400 | 600 | 1000 | 1200;
 
 export interface Brevet {
@@ -18,6 +17,7 @@ export interface Brevet {
   elevation?: number; // in meters
   registrationUrl?: string;
   contactEmail?: string;
+  imageUrl?: string; // New field for event images
 }
 
 // Sample data
@@ -37,7 +37,8 @@ export const brevets: Brevet[] = [
     timeLimit: "13h30m",
     elevation: 2500,
     registrationUrl: "https://example.com/register",
-    contactEmail: "info@seattlerandonneurs.org"
+    contactEmail: "info@seattlerandonneurs.org",
+    imageUrl: "https://images.unsplash.com/photo-1472396961693-142e6e269027?auto=format&fit=crop&w=800&q=80"
   },
   {
     id: "2",
@@ -54,7 +55,8 @@ export const brevets: Brevet[] = [
     timeLimit: "20h00m",
     elevation: 3800,
     registrationUrl: "https://example.com/register",
-    contactEmail: "info@orrandonneurs.org"
+    contactEmail: "info@orrandonneurs.org",
+    imageUrl: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=800&q=80"
   },
   {
     id: "3",
@@ -71,7 +73,8 @@ export const brevets: Brevet[] = [
     timeLimit: "27h00m",
     elevation: 6500,
     registrationUrl: "https://example.com/register",
-    contactEmail: "info@rmcc.org"
+    contactEmail: "info@rmcc.org",
+    imageUrl: "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=800&q=80"
   },
   {
     id: "4",
@@ -88,7 +91,8 @@ export const brevets: Brevet[] = [
     timeLimit: "13h30m",
     elevation: 2200,
     registrationUrl: "https://example.com/register",
-    contactEmail: "info@sfrandonneurs.org"
+    contactEmail: "info@sfrandonneurs.org",
+    imageUrl: "https://images.unsplash.com/photo-1504198453319-5ce911bafcde?auto=format&fit=crop&w=800&q=80"
   },
   {
     id: "5",
@@ -105,7 +109,8 @@ export const brevets: Brevet[] = [
     timeLimit: "40h00m",
     elevation: 4100,
     registrationUrl: "https://example.com/register",
-    contactEmail: "info@chicagorandonneurs.org"
+    contactEmail: "info@chicagorandonneurs.org",
+    imageUrl: "https://images.unsplash.com/photo-1530541969540-f46353a93941?auto=format&fit=crop&w=800&q=80"
   },
   {
     id: "6",
@@ -122,7 +127,8 @@ export const brevets: Brevet[] = [
     timeLimit: "13h30m",
     elevation: 2300,
     registrationUrl: "https://example.com/register",
-    contactEmail: "info@nerando.org"
+    contactEmail: "info@nerando.org",
+    imageUrl: "https://images.unsplash.com/photo-1534438327276-14e530d3ca4e?auto=format&fit=crop&w=800&q=80"
   },
   {
     id: "7",
@@ -139,7 +145,8 @@ export const brevets: Brevet[] = [
     timeLimit: "27h00m",
     elevation: 5100,
     registrationUrl: "https://example.com/register",
-    contactEmail: "info@azrandonneurs.org"
+    contactEmail: "info@azrandonneurs.org",
+    imageUrl: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80"
   },
   {
     id: "8",
@@ -156,7 +163,8 @@ export const brevets: Brevet[] = [
     timeLimit: "13h30m",
     elevation: 1800,
     registrationUrl: "https://example.com/register",
-    contactEmail: "info@sdrandonneurs.org"
+    contactEmail: "info@sdrandonneurs.org",
+    imageUrl: "https://images.unsplash.com/photo-1483058712412-4245e9b90334?auto=format&fit=crop&w=800&q=80"
   },
   {
     id: "9",
@@ -173,7 +181,8 @@ export const brevets: Brevet[] = [
     timeLimit: "75h00m",
     elevation: 12500,
     registrationUrl: "https://example.com/register",
-    contactEmail: "info@cascaderandonneurs.org"
+    contactEmail: "info@cascaderandonneurs.org",
+    imageUrl: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80"
   },
   {
     id: "10",
@@ -190,7 +199,8 @@ export const brevets: Brevet[] = [
     timeLimit: "20h00m",
     elevation: 3100,
     registrationUrl: "https://example.com/register",
-    contactEmail: "info@nyrandonneurs.org"
+    contactEmail: "info@nyrandonneurs.org",
+    imageUrl: "https://images.unsplash.com/photo-1605810230434-7631ac76ec81?auto=format&fit=crop&w=800&q=80"
   },
   {
     id: "11",
@@ -207,7 +217,8 @@ export const brevets: Brevet[] = [
     timeLimit: "40h00m",
     elevation: 7800,
     registrationUrl: "https://example.com/register",
-    contactEmail: "info@orrandonneurs.org"
+    contactEmail: "info@orrandonneurs.org",
+    imageUrl: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=800&q=80"
   },
   {
     id: "12",
@@ -224,10 +235,16 @@ export const brevets: Brevet[] = [
     timeLimit: "90h00m",
     elevation: 15000,
     registrationUrl: "https://example.com/register",
-    contactEmail: "info@sfrandonneurs.org"
+    contactEmail: "info@sfrandonneurs.org",
+    imageUrl: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=800&q=80"
   }
 ];
 
 export const uniqueCities = Array.from(new Set(brevets.map(brevet => brevet.city)));
 
 export const distanceOptions = [200, 300, 400, 600, 1000, 1200] as const;
+
+// Get unique years from the brevet dates
+export const uniqueYears = Array.from(
+  new Set(brevets.map(brevet => new Date(brevet.date).getFullYear()))
+).sort((a, b) => b - a); // Sort years in descending order

@@ -12,6 +12,7 @@ import {
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
+import { AspectRatio } from '@/components/ui/aspect-ratio';
 
 interface EventDetailsModalProps {
   brevet: Brevet | null;
@@ -36,6 +37,15 @@ const EventDetailsModal: React.FC<EventDetailsModalProps> = ({ brevet, isOpen, o
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[600px]">
+        {brevet.imageUrl && (
+          <AspectRatio ratio={16 / 9} className="bg-muted -mt-6 -mx-6 mb-4">
+            <img
+              src={brevet.imageUrl}
+              alt={brevet.title}
+              className="object-cover w-full h-full rounded-t-lg"
+            />
+          </AspectRatio>
+        )}
         <DialogHeader>
           <div className="flex justify-between items-start">
             <DialogTitle className="text-2xl font-bold">{brevet.title}</DialogTitle>
