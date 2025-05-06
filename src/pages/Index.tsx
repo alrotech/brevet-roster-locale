@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { format, parseISO, isAfter, isBefore, isSameDay } from 'date-fns';
 import { Brevet, brevets, uniqueYears } from '@/data/brevets';
@@ -202,7 +203,7 @@ const Index = () => {
   };
 
   return (
-    <div className="container mx-auto p-4 max-w-7xl">
+    <div className="container mx-auto p-4 max-w-7xl mt-4">
       <header className="mb-6 text-center">
         <h1 className="text-4xl font-bold text-cycling-blue">Brevet Calendar</h1>
         <p className="text-lg text-muted-foreground mt-2">Find and register for randonneuring events near you</p>
