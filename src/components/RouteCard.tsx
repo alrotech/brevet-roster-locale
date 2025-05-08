@@ -22,10 +22,10 @@ interface RouteCardProps {
 const RouteCard: React.FC<RouteCardProps> = ({ route, onViewDetails }) => {
   const difficultyColor = () => {
     switch (route.difficulty) {
-      case 'Easy': return 'bg-green-100 text-green-800';
-      case 'Moderate': return 'bg-blue-100 text-blue-800';
+      case 'Easy': return 'bg-green-100 text-cycling-green';
+      case 'Moderate': return 'bg-blue-100 text-cycling-blue';
       case 'Challenging': return 'bg-yellow-100 text-yellow-800';
-      case 'Difficult': return 'bg-orange-100 text-orange-800';
+      case 'Difficult': return 'bg-orange-100 text-cycling-orange';
       case 'Extreme': return 'bg-red-100 text-red-800';
       default: return 'bg-gray-100 text-gray-800';
     }
@@ -44,7 +44,7 @@ const RouteCard: React.FC<RouteCardProps> = ({ route, onViewDetails }) => {
       />
       <CardHeader className="pb-2">
         <div className="flex justify-between items-start">
-          <CardTitle className="text-xl text-cycling-blue">{route.name}</CardTitle>
+          <CardTitle className="text-xl text-cycling-green">{route.name}</CardTitle>
           <Badge className={`${difficultyColor()} ml-2`}>
             {route.difficulty}
           </Badge>
@@ -76,19 +76,24 @@ const RouteCard: React.FC<RouteCardProps> = ({ route, onViewDetails }) => {
         
         {route.eventIds && route.eventIds.length > 0 && (
           <div className="mt-3">
-            <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">
+            <Badge variant="outline" className="bg-cycling-light-orange/20 text-cycling-orange border-cycling-orange/30">
               {route.eventIds.length} {route.eventIds.length === 1 ? 'event' : 'events'} scheduled
             </Badge>
           </div>
         )}
       </CardContent>
       <CardFooter className="flex justify-between pt-2">
-        <Button variant="outline" size="sm" onClick={() => onViewDetails(route)}>
+        <Button 
+          variant="outline" 
+          size="sm" 
+          onClick={() => onViewDetails(route)}
+          className="border-cycling-green text-cycling-green hover:bg-cycling-green/10"
+        >
           View Details
         </Button>
         
         {route.originalEventId && (
-          <Button variant="ghost" size="sm" asChild>
+          <Button variant="ghost" size="sm" asChild className="text-cycling-green hover:text-cycling-dark-green hover:bg-cycling-green/10">
             <Link to={`/brevets?event=${route.originalEventId}`} className="flex items-center gap-1">
               <Flag className="h-4 w-4" />
               <span>Original Event</span>

@@ -64,14 +64,17 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				},
 				cycling: {
+					green: '#00735C',
+					'dark-green': '#004E3E',
+					orange: '#FF7A00',
+					'light-orange': '#FFB066',
+					cream: '#FEF9EF',
 					blue: '#3B82F6',
-					green: '#10B981',
-					orange: '#F59E0B',
+					'light-blue': '#93C5FD',
+					'light-green': '#6EE7B7',
 					red: '#EF4444',
 					yellow: '#F59E0B',
 					purple: '#8B5CF6',
-					'light-blue': '#93C5FD',
-					'light-green': '#6EE7B7',
 				}
 			},
 			borderRadius: {
