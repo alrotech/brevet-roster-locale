@@ -13,6 +13,9 @@ import Clubs from "./pages/Clubs";
 import RoutesPage from "./pages/RoutesPage";
 import Rankings from "./pages/Rankings";
 import Profile from "./pages/Profile";
+import EventResults from "./pages/EventResults";
+import ParticipantProfile from "./pages/ParticipantProfile";
+import Statistics from "./pages/Statistics";
 
 const queryClient = new QueryClient();
 
@@ -31,6 +34,9 @@ const App = () => (
           <Route path="/routes" element={<RoutesPage />} />
           <Route path="/rankings" element={<Rankings />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/events/:eventId/results" element={<EventResults />} />
+          <Route path="/participants/:participantId" element={<ParticipantProfile />} />
+          <Route path="/statistics" element={<Statistics />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
