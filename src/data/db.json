@@ -1,0 +1,101 @@
+{
+  "brevets": [
+    {
+      "id": "1",
+      "title": "Spring 200k",
+      "date": "2025-05-15",
+      "startTime": "07:00",
+      "city": "Seattle",
+      "state": "WA",
+      "country": "USA",
+      "distance": 200,
+      "organizer": "Seattle Randonneurs",
+      "description": "A scenic route through the Cascade foothills with moderate climbing.",
+      "startLocation": "Gas Works Park",
+      "timeLimit": "13h30m",
+      "elevation": 2500,
+      "registrationUrl": "https://example.com/register",
+      "contactEmail": "info@seattlerandonneurs.org",
+      "imageUrl": "https://images.unsplash.com/photo-1472396961693-142e6e269027?auto=format&fit=crop&w=800&q=80"
+    }
+  ],
+  "clubs": [
+    {
+      "id": "520001",
+      "name": "BELARUS RANDONNEURS CLUB",
+      "location": "Минск",
+      "representative": "Ivan Petrov",
+      "website": "https://example.com/brc",
+      "events": 12,
+      "description": "The first randonneuring club in Belarus, established to promote long-distance cycling and audax events throughout the country.",
+      "foundedYear": 2010,
+      "members": 78
+    }
+  ],
+  "routes": [
+    {
+      "id": "r1",
+      "name": "Paris-Brest-Paris Classic",
+      "distance": 1200,
+      "startPoint": "Paris, France",
+      "endPoint": "Paris, France",
+      "eventIds": ["e1", "e5"],
+      "description": "The iconic Paris-Brest-Paris route, one of the oldest cycling events still run on a regular basis.",
+      "imageUrl": "https://images.unsplash.com/photo-1502666229619-dae2d117989a?q=80&w=2070&auto=format&fit=crop",
+      "originalEventId": "e1",
+      "difficulty": "Difficult",
+      "elevation": 12000,
+      "terrain": "Mixed - country roads and some urban sections",
+      "createdAt": "2022-01-15T09:00:00Z"
+    }
+  ],
+  "participants": [
+    {
+      "id": "p1",
+      "name": "John Doe",
+      "club": "Seattle Randonneurs",
+      "country": "USA",
+      "city": "Seattle",
+      "gender": "M",
+      "birthYear": 1985,
+      "totalEvents": 24,
+      "totalDistance": 6400,
+      "imageUrl": "https://randomuser.me/api/portraits/men/32.jpg"
+    }
+  ],
+  "results": [
+    {
+      "eventId": "1",
+      "eventName": "Spring 200k",
+      "date": "2025-05-15",
+      "distance": 200,
+      "controlPoints": [
+        {
+          "id": "cp1",
+          "name": "Start",
+          "distance": 0
+        }
+      ],
+      "results": [
+        {
+          "participant": "p1",
+          "result": {
+            "participantId": "p1",
+            "eventId": "1",
+            "startTime": "2025-05-15T07:00:00Z",
+            "controlPoints": [
+              {
+                "controlPointId": "cp1",
+                "arrivalTime": "2025-05-15T07:00:00Z"
+              }
+            ],
+            "finishTime": "2025-05-15T16:30:00Z",
+            "status": "Finished",
+            "totalTime": 570,
+            "avgSpeed": 21.05
+          }
+        }
+      ]
+    }
+  ]
+}
