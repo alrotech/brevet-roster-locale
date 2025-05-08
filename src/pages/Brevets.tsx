@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -70,6 +69,10 @@ const Brevets = () => {
     setEndDate(undefined);
     setSelectedDistance(null);
     setSelectedDate(null);
+  };
+
+  const handleBrevetSelect = (brevetId: string) => {
+    navigate(`/events/${brevetId}`);
   };
   
   return (
@@ -143,7 +146,11 @@ const Brevets = () => {
               {filteredBrevets.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {filteredBrevets.map((brevet) => (
-                    <BrevetsCard key={brevet.id} brevet={brevet} />
+                    <BrevetsCard 
+                      key={brevet.id} 
+                      brevet={brevet} 
+                      onSelect={() => handleBrevetSelect(brevet.id)}
+                    />
                   ))}
                 </div>
               ) : (
