@@ -12,7 +12,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Route } from '@/data/routes';
 import { Badge } from '@/components/ui/badge';
-import { Distance, Flag, MapPin, Calendar, Link as LinkIcon } from 'lucide-react';
+import { Flag, MapPin, Calendar, Link as LinkIcon } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 
 interface RouteDetailsModalProps {
@@ -54,7 +54,6 @@ const RouteDetailsModal: React.FC<RouteDetailsModalProps> = ({ route, isOpen, on
             </Badge>
           </DialogTitle>
           <DialogDescription className="flex items-center gap-2 text-base pt-1">
-            <Distance className="h-5 w-5" /> 
             <span className="font-medium">{route.distance}km</span>
             {route.elevation && (
               <span className="ml-2">↗ {route.elevation}m</span>

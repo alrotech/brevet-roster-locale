@@ -117,15 +117,15 @@ const RoutesFilters = ({ onFilterChange, className }: RoutesFiltersProps) => {
         <Label>Event Status</Label>
         <RadioGroup defaultValue="all" className="flex flex-col space-y-1">
           <div className="flex items-center space-x-2">
-            <RadioGroupItem value="all" id="all" name="event" checked={hasEvents === null} onClick={() => handleEventsChange('all')} />
+            <RadioGroupItem value="all" id="all" checked={hasEvents === null} onClick={() => handleEventsChange('all')} />
             <Label htmlFor="all">All routes</Label>
           </div>
           <div className="flex items-center space-x-2">
-            <RadioGroupItem value="with" id="with" name="event" checked={hasEvents === true} onClick={() => handleEventsChange('with')} />
+            <RadioGroupItem value="with" id="with" checked={hasEvents === true} onClick={() => handleEventsChange('with')} />
             <Label htmlFor="with">With upcoming events</Label>
           </div>
           <div className="flex items-center space-x-2">
-            <RadioGroupItem value="without" id="without" name="event" checked={hasEvents === false} onClick={() => handleEventsChange('without')} />
+            <RadioGroupItem value="without" id="without" checked={hasEvents === false} onClick={() => handleEventsChange('without')} />
             <Label htmlFor="without">Without events</Label>
           </div>
         </RadioGroup>

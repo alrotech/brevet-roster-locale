@@ -12,7 +12,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Route } from '@/data/routes';
 import { Badge } from '@/components/ui/badge';
-import { Distance, Flag, MapPin, ExternalLink } from 'lucide-react';
+import { Flag, MapPin, ExternalLink } from 'lucide-react';
 
 interface RouteCardProps {
   route: Route;
@@ -50,8 +50,7 @@ const RouteCard: React.FC<RouteCardProps> = ({ route, onViewDetails }) => {
           </Badge>
         </div>
         <div className="flex items-center text-sm text-muted-foreground gap-1">
-          <Distance className="h-4 w-4" /> 
-          <span>{route.distance}km</span>
+          <span className="font-medium">{route.distance}km</span>
           {route.elevation && (
             <span className="ml-2">↗ {route.elevation}m</span>
           )}
