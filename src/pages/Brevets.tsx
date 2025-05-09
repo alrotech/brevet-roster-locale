@@ -1,48 +1,61 @@
 
 import React, { useState } from 'react';
-import { brevets } from '@/data/brevets';
+import { brevets, distanceOptions } from '@/data/brevets';
 import BrevetsFilters from '@/components/BrevetsFilters';
 import BrevetsCard from '@/components/BrevetsCard';
-import BrevetsCalendar from '@/components/BrevetsCalendar';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { ListFilter, CalendarIcon, ListIcon } from 'lucide-react';
+import { format, parseISO, startOfMonth } from 'date-fns';
 
 const Brevets = () => {
-  const [currentView, setCurrentView] = useState<'calendar' | 'list'>('calendar');
-  const [filter, setFilter] = useState({
-    distance: [] as string[],
-    location: '' as string,
-    startDate: null as Date | null,
-    endDate: null as Date | null,
-  });
+  const [currentView, setCurrentView] = useState<'calendar' | 'list'>('list');
+  const [selectedCity, setSelectedCity] = useState('all_cities');
+  const [startDate, setStartDate] = useState<Date | undefined>(undefined);
+  const [endDate, setEndDate] = useState<Date | undefined>(undefined);
+  const [selectedDistance, setSelectedDistance] = useState<number | null>(null);
+  const [currentMonth, setCurrentMonth] = useState(startOfMonth(new Date()));
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [showFilters, setShowFilters] = useState(false);
 
   // Apply filters
   const filteredBrevets = brevets.filter(brevet => {
     // Filter by distance
-    if (filter.distance.length > 0 && !filter.distance.includes(String(brevet.distance))) {
+    if (selectedDistance && brevet.distance !== selectedDistance) {
       return false;
     }
 
     // Filter by location
-    if (filter.location && 
-      !brevet.city.toLowerCase().includes(filter.location.toLowerCase()) &&
-      !brevet.state.toLowerCase().includes(filter.location.toLowerCase()) &&
-      !brevet.country.toLowerCase().includes(filter.location.toLowerCase())) {
+    if (selectedCity && selectedCity !== 'all_cities' && 
+      !brevet.city.toLowerCase().includes(selectedCity.toLowerCase()) &&
+      !brevet.state.toLowerCase().includes(selectedCity.toLowerCase()) &&
+      !brevet.country.toLowerCase().includes(selectedCity.toLowerCase())) {
       return false;
     }
 
     // Filter by date range
-    if (filter.startDate && new Date(brevet.date) < filter.startDate) {
+    if (startDate && new Date(brevet.date) < startDate) {
       return false;
     }
-    if (filter.endDate && new Date(brevet.date) > filter.endDate) {
+    if (endDate && new Date(brevet.date) > endDate) {
+      return false;
+    }
+
+    // Filter by selected date
+    if (selectedDate && !format(parseISO(brevet.date), 'yyyy-MM-dd').includes(format(selectedDate, 'yyyy-MM-dd'))) {
       return false;
     }
 
     return true;
   });
+
+  const resetFilters = () => {
+    setSelectedCity('all_cities');
+    setStartDate(undefined);
+    setEndDate(undefined);
+    setSelectedDistance(null);
+    setSelectedDate(null);
+  };
 
   const handleSelect = (brevetId: string) => {
     // Handle brevet selection
@@ -71,7 +84,7 @@ const Brevets = () => {
           </Button>
         </div>
 
-        <Tabs defaultValue="calendar" value={currentView} onValueChange={(v) => setCurrentView(v as 'calendar' | 'list')}>
+        <Tabs defaultValue="list" value={currentView} onValueChange={(v) => setCurrentView(v as 'calendar' | 'list')}>
           <TabsList>
             <TabsTrigger value="calendar" className="flex items-center gap-2">
               <CalendarIcon size={16} />
@@ -87,13 +100,27 @@ const Brevets = () => {
 
       {showFilters && (
         <div className="mb-6">
-          <BrevetsFilters filter={filter} setFilter={setFilter} />
+          <BrevetsFilters 
+            selectedCity={selectedCity}
+            setSelectedCity={setSelectedCity}
+            startDate={startDate}
+            setStartDate={setStartDate}
+            endDate={endDate}
+            setEndDate={setEndDate}
+            selectedDistance={selectedDistance}
+            setSelectedDistance={setSelectedDistance}
+            resetFilters={resetFilters}
+          />
         </div>
       )}
 
-      <Tabs defaultValue="calendar" value={currentView} className="w-full">
+      <Tabs defaultValue="list" value={currentView} className="w-full">
         <TabsContent value="calendar" className="mt-0">
-          <BrevetsCalendar brevets={filteredBrevets} onSelect={handleSelect} />
+          {/* We need to update this component or import it if available */}
+          <div className="bg-white p-4 rounded-lg">
+            <p>Calendar view is in development.</p>
+            <p>Selected events: {filteredBrevets.length}</p>
+          </div>
         </TabsContent>
         <TabsContent value="list" className="mt-0">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -101,9 +128,22 @@ const Brevets = () => {
               <BrevetsCard 
                 key={brevet.id} 
                 brevet={brevet}
-                onSelect={handleSelect}
+                onSelect={() => handleSelect(brevet.id)}
               />
             ))}
+            
+            {filteredBrevets.length === 0 && (
+              <div className="col-span-3 text-center py-8">
+                <p className="text-muted-foreground">No events found matching your filters.</p>
+                <Button 
+                  variant="outline" 
+                  onClick={resetFilters} 
+                  className="mt-2"
+                >
+                  Reset Filters
+                </Button>
+              </div>
+            )}
           </div>
         </TabsContent>
       </Tabs>
