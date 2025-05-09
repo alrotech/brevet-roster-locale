@@ -19,6 +19,9 @@ import ParticipantProfile from "./pages/ParticipantProfile";
 import Statistics from "./pages/Statistics";
 import Footer from "./components/Footer";
 
+// Import i18n configuration
+import './i18n/i18n';
+
 const queryClient = new QueryClient();
 
 const App = () => (

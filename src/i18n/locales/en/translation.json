@@ -1,0 +1,70 @@
+
+{
+  "app": {
+    "name": "RandoTracker"
+  },
+  "nav": {
+    "home": "Home",
+    "events": "Events",
+    "brevets": "Brevets",
+    "permanents": "Permanents",
+    "clubs": "Clubs",
+    "routes": "Routes",
+    "rankings": "Rankings",
+    "resources": "Resources",
+    "cyclists": "Cyclists",
+    "rules": "Rules",
+    "howToParticipate": "How to Participate",
+    "blog": "Blog"
+  },
+  "home": {
+    "hero": {
+      "title": "Discover the World of Randonneuring",
+      "subtitle": "Challenge yourself with long-distance cycling events from 200km to 1200km. Join the global community of riders who embrace self-sufficiency, endurance, and adventure.",
+      "findEvents": "Find Events",
+      "getStarted": "Get Started"
+    },
+    "quickLinks": {
+      "title": "Quick Links",
+      "eventsCalendar": {
+        "title": "Events Calendar",
+        "description": "Find upcoming brevets and register for events"
+      },
+      "routes": {
+        "title": "Routes",
+        "description": "Explore certified routes for brevets and permanents"
+      },
+      "rankings": {
+        "title": "Rankings",
+        "description": "See top riders and their achievements"
+      },
+      "rules": {
+        "title": "Rules",
+        "description": "Learn about randonneuring regulations and guidelines"
+      }
+    },
+    "upcomingEvents": {
+      "title": "Upcoming Events",
+      "seeFullCalendar": "See full calendar →",
+      "viewDetails": "View Details"
+    },
+    "rules": {
+      "title": "Randonneuring Essentials",
+      "intro": "Randonneuring is a long-distance cycling discipline focusing on self-sufficiency, endurance, and camaraderie rather than competition. Riders must complete routes of 200km to 1200km within specified time limits, collecting proof of passage at designated control points.",
+      "keyRules": "Key rules every randonneur should know:",
+      "rulesList": [
+        "Complete the full route within the time limit based on distance",
+        "Visit all checkpoints (controls) along the route to get your brevet card stamped",
+        "Carry required equipment: lights, reflective gear, and safety essentials",
+        "Be self-sufficient – support vehicles are not allowed on the route",
+        "Follow traffic laws and ride safely at all times",
+        "Participants must maintain a minimum average speed of 13.5 km/h"
+      ],
+      "learnMore": "Learn More About Randonneuring"
+    }
+  },
+  "common": {
+    "back": "Back",
+    "viewDetails": "View Details"
+  }
+}

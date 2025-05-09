@@ -1,223 +1,112 @@
+
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { ArrowLeft, CalendarDays } from 'lucide-react';
-import { format, parseISO, isAfter, isBefore, isSameDay } from 'date-fns';
-import { brevets, uniqueCities, distanceOptions } from '@/data/brevets';
+import { brevets } from '@/data/brevets';
 import BrevetsFilters from '@/components/BrevetsFilters';
-import BrevetsCalendar from '@/components/BrevetsCalendar';
-import CalendarHeader from '@/components/CalendarHeader';
 import BrevetsCard from '@/components/BrevetsCard';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table';
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from '@/components/ui/tabs';
+import BrevetsCalendar from '@/components/BrevetsCalendar';
+import { Button } from '@/components/ui/button';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import { ListFilter, CalendarIcon, ListIcon } from 'lucide-react';
 
 const Brevets = () => {
-  const navigate = useNavigate();
-  const [currentMonth, setCurrentMonth] = useState(new Date());
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-  const [selectedCity, setSelectedCity] = useState('all_cities');
-  const [startDate, setStartDate] = useState<Date | undefined>(undefined);
-  const [endDate, setEndDate] = useState<Date | undefined>(undefined);
-  const [selectedDistance, setSelectedDistance] = useState<number | null>(null);
-  const [viewMode, setViewMode] = useState<'calendar' | 'list'>('calendar');
-  
-  // Filter brevets based on selected filters
+  const [currentView, setCurrentView] = useState<'calendar' | 'list'>('calendar');
+  const [filter, setFilter] = useState({
+    distance: [] as string[],
+    location: '' as string,
+    startDate: null as Date | null,
+    endDate: null as Date | null,
+  });
+  const [showFilters, setShowFilters] = useState(false);
+
+  // Apply filters
   const filteredBrevets = brevets.filter(brevet => {
-    const brevetDate = parseISO(brevet.date);
-    
-    // City filter
-    if (selectedCity !== 'all_cities' && brevet.city !== selectedCity) {
+    // Filter by distance
+    if (filter.distance.length > 0 && !filter.distance.includes(String(brevet.distance))) {
       return false;
     }
-    
-    // Date range filter
-    if (startDate && isBefore(brevetDate, startDate)) {
+
+    // Filter by location
+    if (filter.location && 
+      !brevet.city.toLowerCase().includes(filter.location.toLowerCase()) &&
+      !brevet.state.toLowerCase().includes(filter.location.toLowerCase()) &&
+      !brevet.country.toLowerCase().includes(filter.location.toLowerCase())) {
       return false;
     }
-    if (endDate && isAfter(brevetDate, endDate)) {
+
+    // Filter by date range
+    if (filter.startDate && new Date(brevet.date) < filter.startDate) {
       return false;
     }
-    
-    // Distance filter
-    if (selectedDistance && brevet.distance !== selectedDistance) {
+    if (filter.endDate && new Date(brevet.date) > filter.endDate) {
       return false;
     }
-    
-    // Selected date filter
-    if (selectedDate && !isSameDay(brevetDate, selectedDate)) {
-      return false;
-    }
-    
+
     return true;
-  }).sort((a, b) => parseISO(a.date).getTime() - parseISO(b.date).getTime());
+  });
 
-  const resetFilters = () => {
-    setSelectedCity('all_cities');
-    setStartDate(undefined);
-    setEndDate(undefined);
-    setSelectedDistance(null);
-    setSelectedDate(null);
+  const handleSelect = (brevetId: string) => {
+    // Handle brevet selection
+    console.log("Selected brevet:", brevetId);
+    // Future implementation: show details modal or navigate to details page
   };
 
-  const handleBrevetSelect = (brevetId: string) => {
-    navigate(`/events/${brevetId}`);
-  };
-  
   return (
     <div className="container mx-auto p-4 max-w-7xl">
-      <Button 
-        variant="ghost" 
-        onClick={() => navigate(-1)} 
-        className="mb-4 flex items-center gap-2"
-      >
-        <ArrowLeft className="h-4 w-4" />
-        Back
-      </Button>
-      
-      <header className="mb-6 text-center">
-        <h1 className="text-4xl font-bold text-cycling-blue">Brevets</h1>
-        <p className="text-lg text-muted-foreground mt-2">
-          Find and register for official randonneuring events
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold mb-2 text-cycling-blue">Brevets Calendar</h1>
+        <p className="text-muted-foreground">
+          Find and register for upcoming brevet events from 200km to 1200km
         </p>
-      </header>
-      
-      <div className="space-y-6">
-        {/* Filters */}
-        <div className="bg-white rounded-lg shadow-lg p-6">
-          <BrevetsFilters
-            selectedCity={selectedCity}
-            setSelectedCity={setSelectedCity}
-            startDate={startDate}
-            setStartDate={setStartDate}
-            endDate={endDate}
-            setEndDate={setEndDate}
-            selectedDistance={selectedDistance}
-            setSelectedDistance={setSelectedDistance}
-            resetFilters={resetFilters}
-          />
+      </div>
+
+      <div className="mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div>
+          <Button 
+            variant="outline" 
+            className="flex items-center gap-2"
+            onClick={() => setShowFilters(!showFilters)}
+          >
+            <ListFilter size={18} />
+            Filters
+          </Button>
         </div>
-        
-        {/* View Mode Selector */}
-        <Tabs value={viewMode} onValueChange={(value) => setViewMode(value as 'calendar' | 'list')} className="w-full">
-          <div className="flex justify-end mb-4">
-            <TabsList>
-              <TabsTrigger value="calendar" className="flex items-center gap-2">
-                <CalendarDays className="h-4 w-4" />
-                Calendar
-              </TabsTrigger>
-              <TabsTrigger value="list" className="flex items-center gap-2">
-                <CalendarDays className="h-4 w-4" />
-                List
-              </TabsTrigger>
-            </TabsList>
-          </div>
 
-          <TabsContent value="calendar" className="space-y-6">
-            {/* Calendar View */}
-            <div className="bg-white rounded-lg shadow-lg p-6">
-              <CalendarHeader currentMonth={currentMonth} setCurrentMonth={setCurrentMonth} />
-              <BrevetsCalendar 
-                brevets={brevets}
-                currentMonth={currentMonth}
-                selectedDate={selectedDate}
-                setSelectedDate={setSelectedDate}
-              />
-            </div>
-
-            {/* Filtered Events for Calendar View */}
-            <div>
-              <h2 className="text-xl font-semibold mb-4">
-                {selectedDate ? `Events on ${format(selectedDate, 'MMMM d, yyyy')}` : 
-                filteredBrevets.length > 0 ? 'Filtered Events' : 'No events found'}
-              </h2>
-              
-              {filteredBrevets.length > 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {filteredBrevets.map((brevet) => (
-                    <BrevetsCard 
-                      key={brevet.id} 
-                      brevet={brevet} 
-                      onSelect={() => handleBrevetSelect(brevet.id)}
-                    />
-                  ))}
-                </div>
-              ) : (
-                <div className="bg-white rounded-lg shadow-lg p-6 text-center">
-                  <p className="text-muted-foreground">No events match your filters.</p>
-                  <Button onClick={resetFilters} variant="outline" className="mt-4">
-                    Reset Filters
-                  </Button>
-                </div>
-              )}
-            </div>
-          </TabsContent>
-
-          <TabsContent value="list" className="space-y-6">
-            {/* List View */}
-            <div className="bg-white rounded-lg shadow-lg p-6 overflow-x-auto">
-              {filteredBrevets.length > 0 ? (
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Date</TableHead>
-                      <TableHead>Event</TableHead>
-                      <TableHead>Distance</TableHead>
-                      <TableHead>Location</TableHead>
-                      <TableHead>Start Time</TableHead>
-                      <TableHead>Status</TableHead>
-                      <TableHead>Details</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {filteredBrevets.map((brevet) => (
-                      <TableRow key={brevet.id}>
-                        <TableCell>{format(parseISO(brevet.date), 'MMM d, yyyy')}</TableCell>
-                        <TableCell className="font-medium">{brevet.title}</TableCell>
-                        <TableCell>{brevet.distance}k</TableCell>
-                        <TableCell>{brevet.city}</TableCell>
-                        <TableCell>{brevet.startTime}</TableCell>
-                        <TableCell>
-                          <span 
-                            className={`inline-block px-2 py-1 rounded-full text-xs font-medium 
-                            ${isAfter(parseISO(brevet.date), new Date()) ? 
-                              'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}`}
-                          >
-                            {isAfter(parseISO(brevet.date), new Date()) ? 'Upcoming' : 'Past'}
-                          </span>
-                        </TableCell>
-                        <TableCell>
-                          <Button size="sm" onClick={() => navigate(`/events/${brevet.id}`)}>
-                            View
-                          </Button>
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              ) : (
-                <div className="text-center py-8">
-                  <p className="text-muted-foreground">No events match your filters.</p>
-                  <Button onClick={resetFilters} variant="outline" className="mt-4">
-                    Reset Filters
-                  </Button>
-                </div>
-              )}
-            </div>
-          </TabsContent>
+        <Tabs defaultValue="calendar" value={currentView} onValueChange={(v) => setCurrentView(v as 'calendar' | 'list')}>
+          <TabsList>
+            <TabsTrigger value="calendar" className="flex items-center gap-2">
+              <CalendarIcon size={16} />
+              Calendar
+            </TabsTrigger>
+            <TabsTrigger value="list" className="flex items-center gap-2">
+              <ListIcon size={16} />
+              List
+            </TabsTrigger>
+          </TabsList>
         </Tabs>
       </div>
+
+      {showFilters && (
+        <div className="mb-6">
+          <BrevetsFilters filter={filter} setFilter={setFilter} />
+        </div>
+      )}
+
+      <Tabs defaultValue="calendar" value={currentView} className="w-full">
+        <TabsContent value="calendar" className="mt-0">
+          <BrevetsCalendar brevets={filteredBrevets} onSelect={handleSelect} />
+        </TabsContent>
+        <TabsContent value="list" className="mt-0">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {filteredBrevets.map(brevet => (
+              <BrevetsCard 
+                key={brevet.id} 
+                brevet={brevet}
+                onSelect={handleSelect}
+              />
+            ))}
+          </div>
+        </TabsContent>
+      </Tabs>
     </div>
   );
 };

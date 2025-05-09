@@ -1,6 +1,8 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { User } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { 
   NavigationMenu,
   NavigationMenuContent,
@@ -13,13 +15,16 @@ import {
 import { cn } from '@/lib/utils';
 import { Button } from './ui/button';
 import { Avatar, AvatarFallback } from './ui/avatar';
+import LanguageSwitcher from './LanguageSwitcher';
 
 const NavBar = () => {
+  const { t } = useTranslation();
+  
   return (
     <div className="w-full border-b bg-background">
       <div className="container flex h-16 items-center justify-between px-4 md:px-6">
         <Link to="/" className="flex items-center gap-2">
-          <span className="text-xl font-bold text-cycling-blue">RandoTracker</span>
+          <span className="text-xl font-bold text-cycling-blue">{t('app.name')}</span>
         </Link>
         
         <NavigationMenu className="hidden md:flex">
@@ -27,20 +32,20 @@ const NavBar = () => {
             <NavigationMenuItem>
               <Link to="/">
                 <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  Home
+                  {t('nav.home')}
                 </NavigationMenuLink>
               </Link>
             </NavigationMenuItem>
             
             <NavigationMenuItem>
-              <NavigationMenuTrigger>Events</NavigationMenuTrigger>
+              <NavigationMenuTrigger>{t('nav.events')}</NavigationMenuTrigger>
               <NavigationMenuContent>
                 <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-2">
-                  <ListItem to="/brevets" title="Brevets">
-                    Official randonneuring events from 200km to 1200km
+                  <ListItem to="/brevets" title={t('nav.brevets')}>
+                    {t('nav.brevets')}
                   </ListItem>
-                  <ListItem to="/permanents" title="Permanents">
-                    Ride anytime routes that count toward randonneuring awards
+                  <ListItem to="/permanents" title={t('nav.permanents')}>
+                    {t('nav.permanents')}
                   </ListItem>
                 </ul>
               </NavigationMenuContent>
@@ -49,7 +54,7 @@ const NavBar = () => {
             <NavigationMenuItem>
               <Link to="/clubs">
                 <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  Clubs
+                  {t('nav.clubs')}
                 </NavigationMenuLink>
               </Link>
             </NavigationMenuItem>
@@ -57,7 +62,7 @@ const NavBar = () => {
             <NavigationMenuItem>
               <Link to="/routes">
                 <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  Routes
+                  {t('nav.routes')}
                 </NavigationMenuLink>
               </Link>
             </NavigationMenuItem>
@@ -65,26 +70,26 @@ const NavBar = () => {
             <NavigationMenuItem>
               <Link to="/rankings">
                 <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  Rankings
+                  {t('nav.rankings')}
                 </NavigationMenuLink>
               </Link>
             </NavigationMenuItem>
             
             <NavigationMenuItem>
-              <NavigationMenuTrigger>Resources</NavigationMenuTrigger>
+              <NavigationMenuTrigger>{t('nav.resources')}</NavigationMenuTrigger>
               <NavigationMenuContent>
                 <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-                  <ListItem to="/cyclists" title="Cyclists">
-                    Find and connect with fellow randonneurs
+                  <ListItem to="/cyclists" title={t('nav.cyclists')}>
+                    {t('nav.cyclists')}
                   </ListItem>
-                  <ListItem to="/rules" title="Rules">
-                    Official randonneuring rules and regulations
+                  <ListItem to="/rules" title={t('nav.rules')}>
+                    {t('nav.rules')}
                   </ListItem>
-                  <ListItem to="/how-to-participate" title="How to Participate">
-                    Guide for beginners on joining randonneuring events
+                  <ListItem to="/how-to-participate" title={t('nav.howToParticipate')}>
+                    {t('nav.howToParticipate')}
                   </ListItem>
-                  <ListItem to="/blog" title="Blog">
-                    Articles and stories from the randonneuring community
+                  <ListItem to="/blog" title={t('nav.blog')}>
+                    {t('nav.blog')}
                   </ListItem>
                 </ul>
               </NavigationMenuContent>
@@ -93,6 +98,8 @@ const NavBar = () => {
         </NavigationMenu>
         
         <div className="flex items-center gap-4">
+          <LanguageSwitcher />
+          
           <Link to="/profile">
             <Button variant="ghost" size="icon" className="rounded-full">
               <Avatar>

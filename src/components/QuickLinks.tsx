@@ -1,32 +1,35 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { CalendarDays, MapPin, Award, Book } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 
 const QuickLinks = () => {
+  const { t } = useTranslation();
+  
   const links = [
     {
-      title: "Events Calendar",
-      description: "Find upcoming brevets and register for events",
+      title: t('home.quickLinks.eventsCalendar.title'),
+      description: t('home.quickLinks.eventsCalendar.description'),
       icon: <CalendarDays className="h-8 w-8 text-cycling-blue" />,
       to: "/brevets",
     },
     {
-      title: "Routes",
-      description: "Explore certified routes for brevets and permanents",
+      title: t('home.quickLinks.routes.title'),
+      description: t('home.quickLinks.routes.description'),
       icon: <MapPin className="h-8 w-8 text-cycling-green" />,
       to: "/routes",
     },
     {
-      title: "Rankings",
-      description: "See top riders and their achievements",
+      title: t('home.quickLinks.rankings.title'),
+      description: t('home.quickLinks.rankings.description'),
       icon: <Award className="h-8 w-8 text-cycling-orange" />,
       to: "/rankings",
     },
     {
-      title: "Rules",
-      description: "Learn about randonneuring regulations and guidelines",
+      title: t('home.quickLinks.rules.title'),
+      description: t('home.quickLinks.rules.description'),
       icon: <Book className="h-8 w-8 text-cycling-blue" />,
       to: "/rules",
     }

@@ -2,6 +2,7 @@
 import React from 'react';
 import { format, parseISO } from 'date-fns';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Calendar, MapPin } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -13,16 +14,18 @@ type UpcomingEventsProps = {
 };
 
 const UpcomingEvents = ({ events }: UpcomingEventsProps) => {
+  const { t } = useTranslation();
+  
   // Show only the next 4 events
   const upcomingEvents = events.slice(0, 4);
 
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold text-cycling-blue">Upcoming Events</h2>
+        <h2 className="text-2xl font-bold text-cycling-blue">{t('home.upcomingEvents.title')}</h2>
         <Link to="/brevets">
           <Button variant="ghost" className="text-cycling-blue hover:text-cycling-blue/80">
-            See full calendar →
+            {t('home.upcomingEvents.seeFullCalendar')}
           </Button>
         </Link>
       </div>
@@ -48,7 +51,7 @@ const UpcomingEvents = ({ events }: UpcomingEventsProps) => {
               </div>
               
               <Button asChild className="w-full" variant="outline">
-                <Link to={`/events/${event.id}`}>View Details</Link>
+                <Link to={`/events/${event.id}`}>{t('home.upcomingEvents.viewDetails')}</Link>
               </Button>
             </CardContent>
           </Card>
