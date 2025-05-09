@@ -1,6 +1,8 @@
 
+'use client';
+
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { Calendar, MapPin, Award, Book } from 'lucide-react';
@@ -19,10 +21,10 @@ const HeroBanner = () => {
           </p>
           <div className="flex flex-wrap gap-4">
             <Button asChild size="lg" variant="default" className="bg-white text-cycling-blue hover:bg-white/90">
-              <Link to="/brevets">{t('home.hero.findEvents')}</Link>
+              <Link href="/brevets">{t('home.hero.findEvents')}</Link>
             </Button>
             <Button asChild size="lg" variant="outline" className="border-white text-white hover:bg-white/20">
-              <Link to="/how-to-participate">{t('home.hero.getStarted')}</Link>
+              <Link href="/how-to-participate">{t('home.hero.getStarted')}</Link>
             </Button>
           </div>
         </div>
