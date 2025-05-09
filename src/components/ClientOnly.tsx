@@ -1,6 +1,4 @@
 
-'use client';
-
 import { useState, useEffect, ReactNode } from 'react';
 
 interface ClientOnlyProps {
